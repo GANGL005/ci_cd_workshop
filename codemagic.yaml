@@ -1,0 +1,36 @@
+# codemagic.yaml
+
+workflows:
+  basic-workflow:
+    name: Basic Flutter Workflow
+    environment:
+      flutter: stable # Puedes cambiar a una versión específica como "3.3.0"
+      xcode: latest   # Versión de Xcode para construir en iOS, solo necesaria si quieres compilar para iOS
+      vars:
+        PROJECT_NAME: "CI CD Workshop"
+
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter pub get
+
+      - name: Run Flutter tests
+        script: |
+          flutter test
+
+      - name: Build Android
+        script: |
+          flutter build apk --release
+
+      - name: Build iOS
+        script: |
+          flutter build ios --release --no-codesign
+
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk # APK para Android
+      - build/ios/iphoneos/*.app                      # Archivo de la app para iOS
+
+    publishing:
+      email:
+        recipients:
+          - "luis.gangas@globant.com" # Cambia por tu email
