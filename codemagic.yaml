@@ -9,6 +9,13 @@ workflows:
       vars:
         PROJECT_NAME: "CI CD Workshop"
 
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+
     scripts:
       - name: Install dependencies
         script: |
